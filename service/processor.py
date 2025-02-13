@@ -19,6 +19,14 @@ collection.create_index([("event", pymongo.ASCENDING)])
 collection.create_index([("name", pymongo.ASCENDING), ("event", pymongo.ASCENDING), ("medal_type", pymongo.ASCENDING)], unique=True)
 
 def process_csv(file_path):
+    """Process a CSV file and insert its data into the MongoDB collection.
+    Args:
+        file_path (str): The path to the CSV file to be processed.
+
+    Raises:
+        Exception: If an error occurs during file processing.
+    """
+              
     try:
         # Specify encoding to fix decoding errors
         df = pd.read_csv(file_path, encoding='latin1')

@@ -22,6 +22,17 @@ collection = db[db_collection]
 
 @router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
+    """Endpoint to upload a CSV file.
+
+    Args:
+        file (UploadFile): The CSV file to be uploaded.
+
+    Raises:
+        HTTPException: If the file is not a CSV.
+
+    Returns:
+        dict: A message indicating the result of the upload.
+    """
     # Validate file type
     if not file.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV files are allowed")
@@ -36,6 +47,17 @@ async def upload_file(file: UploadFile = File(...)):
 
 @router.get("/aggregated_stats/event")
 async def get_event_stats(page: int = Query(1, ge=1)):
+    """Endpoint to retrieve aggregated event statistics with pagination.
+
+    Args:
+        page (int, optional): The page number for pagination. Defaults to 1.
+
+    Raises:
+        HTTPException: If an internal error occurs during data retrieval.
+
+    Returns:
+        dict: Aggregated event statistics and pagination details.
+    """
     try:
         per_page = 10
         skip = (page - 1) * per_page
