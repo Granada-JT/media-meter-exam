@@ -1,7 +1,6 @@
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import time
-import os
 from processor import process_csv
 
 WATCH_DIR = "storage/app/medalists/"
