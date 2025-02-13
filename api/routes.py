@@ -1,18 +1,24 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Query
 import pymongo
-from service.processor import MONGO_URI
 import os
+from dotenv import load_dotenv
 import shutil
+
+load_dotenv()
 
 router = APIRouter()
 
 UPLOAD_DIR = "storage/app/medalists/"
 os.makedirs(UPLOAD_DIR, exist_ok=True)  # Ensure the directory exists
 
+db_uri = os.getenv('MONGO_URI')
+db_name = os.getenv('DB_NAME')
+db_collection = os.getenv('DB_COLLECTION')
+
 # Set up MongoDB connection
-client = pymongo.MongoClient(MONGO_URI)
-db = client["medalists_db"]
-collection = db["medalists_events"]
+client = pymongo.MongoClient(db_uri)
+db = client[db_name]
+collection = db[db_collection]
 
 @router.post("/upload")
 async def upload_file(file: UploadFile = File(...)):

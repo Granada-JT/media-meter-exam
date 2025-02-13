@@ -1,15 +1,18 @@
 import pandas as pd
 import pymongo
 import os
+from dotenv import load_dotenv
 from datetime import datetime
 
-MONGO_URI = "mongodb+srv://granada-jt:mgVK1ngGd6TArn8B@b295.gdrdocw.mongodb.net/medalists_db?retryWrites=true&w=majority"
-DB_NAME = "medalists_db"
-COLLECTION_NAME = "medalists_events"
+load_dotenv()
 
-client = pymongo.MongoClient(MONGO_URI)
-db = client[DB_NAME]
-collection = db[COLLECTION_NAME]
+db_uri = os.getenv('MONGO_URI')
+db_name = os.getenv('DB_NAME')
+db_collection = os.getenv('DB_COLLECTION')
+
+client = pymongo.MongoClient(db_uri)
+db = client[db_name]
+collection = db[db_collection]
 
 # Ensure indexing for fast queries
 collection.create_index([("event", pymongo.ASCENDING)])
